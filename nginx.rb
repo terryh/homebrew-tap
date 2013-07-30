@@ -6,13 +6,6 @@ class NginxPushStreamModule < Formula
   def initialize; super 'NginxPushStreamModule'; end
 end
 
-
-class NginxHttpAuthRequestModule < Formula
-  homepage 'http://mdounin.ru/hg/ngx_http_auth_request_module'
-  url 'http://mdounin.ru/hg/ngx_http_auth_request_module', :using => :hg
-  def initialize; super 'NginxHttpAuthRequestModule'; end
-end
-
 class Nginx < Formula
   homepage 'http://nginx.org/'
   url 'http://nginx.org/download/nginx-1.2.7.tar.gz'
@@ -31,7 +24,6 @@ class Nginx < Formula
   option 'with-webdav', 'Compile with support for WebDAV module'
   option 'with-debug', 'Compile with support for debug log'
   option 'with-push-stream', 'Compile with support for Push Stream module'
-  option 'with-http-auth-request', 'Compile with support for HTTP Auth Request module'
 
   skip_clean 'logs'
 
@@ -58,11 +50,6 @@ class Nginx < Formula
     "--add-module=nginx-push-stream-module"
   end
 
-  def http_auth_request_args
-    NginxHttpAuthRequestModule.new.brew { (buildpath + 'nginx-http-auth-request-module').install Dir['*'] }
-    "--add-module=nginx-http-auth-request-module"
-  end
-
   def install
     args = ["--prefix=#{prefix}",
             "--with-http_ssl_module",
@@ -83,7 +70,6 @@ class Nginx < Formula
     args << "--with-http_dav_module" if build.include? 'with-webdav'
     args << "--with-debug" if build.include? 'with-debug'
     args << push_stream_args if build.include? 'with-push-stream'
-    args << http_auth_request_args if build.include? 'with-http-auth-request'
 
     system "./configure", *args
     system "make"

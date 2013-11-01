@@ -4,7 +4,9 @@
 ## Usage  
 Tap into the repository using the tap command:
 
-    brew tap thomsbg/tap
+    brew tap terryh/tap
+
+    brew install terryh/tap/nginx --with-push-stream --with-spdy
 
 ## Available Formulae  
 * **nginx**  

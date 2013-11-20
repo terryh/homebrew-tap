@@ -56,6 +56,7 @@ class Nginx < Formula
   
   def install
     # Changes default port to 8080
+    ENV.cxx += ' -stdlib=libstdc++' if ENV.compiler == :clang && MacOS.version >= :mavericks
     inreplace 'conf/nginx.conf', 'listen       80;', 'listen       8080;'
 
     cc_opt = "-I#{HOMEBREW_PREFIX}/include"
